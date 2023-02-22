@@ -1,9 +1,6 @@
 package diet;
 
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 
 /**
@@ -12,9 +9,11 @@ import java.util.TreeSet;
  *
  */
 public class Food {
-	Set<NutritionalElement> rawMaterials = new TreeSet<>(new ByNameRawMaterialComparator());
-	Set<NutritionalElement> products = new TreeSet<>(new ByNameRawMaterialComparator());
-	Set<NutritionalElement> recipes = new TreeSet<>(new ByNameRawMaterialComparator());
+
+
+	Map<String, NutritionalElement> rawMaterials = new TreeMap<>();
+	Map<String, NutritionalElement> products = new TreeMap<>();
+	Map<String, NutritionalElement> recipes = new TreeMap<>();
 
 	/**
 	 * Define a new raw material.
@@ -32,7 +31,7 @@ public class Food {
 									  double fat){
 
 		RawMaterial rawMaterial = new RawMaterial(name, calories, proteins, carbs, fat);
-		rawMaterials.add(rawMaterial);
+		rawMaterials.put(name, rawMaterial);
 	}
 	
 	/**
@@ -40,7 +39,7 @@ public class Food {
 	 * @return collection of raw materials though the {@link NutritionalElement} interface
 	 */
 	public Collection<NutritionalElement> rawMaterials(){
-		return rawMaterials;
+		return rawMaterials.values();
 	}
 	
 	/**
@@ -49,10 +48,7 @@ public class Food {
 	 * @return  a raw material though the {@link NutritionalElement} interface
 	 */
 	public NutritionalElement getRawMaterial(String name){
-		for (NutritionalElement rawMaterial : rawMaterials) {
-			if (rawMaterial.getName().equals(name)) return rawMaterial;
-		}
-		return null;
+		return rawMaterials.get(name);
 	}
 
 	/**
@@ -70,8 +66,7 @@ public class Food {
 								  double carbs,
 								  double fat){
 		Product product = new Product(name, calories, proteins, carbs, fat);
-		products.add(product);
-
+		products.put(name, product);
 	}
 	
 	/**
@@ -79,7 +74,7 @@ public class Food {
 	 * @return collection of products though the {@link NutritionalElement} interface
 	 */
 	public Collection<NutritionalElement> products(){
-		return products;
+		return products.values();
 	}
 	
 	/**
@@ -88,10 +83,7 @@ public class Food {
 	 * @return  a product though the {@link NutritionalElement} interface
 	 */
 	public NutritionalElement getProduct(String name){
-		for (NutritionalElement product : products) {
-			if (product.getName().equals(name)) return product;
-		}
-		return null;
+		return products.get(name);
 	}
 	
 	/**
@@ -102,7 +94,7 @@ public class Food {
 	 */
 	public Recipe createRecipe(String name) {
 		Recipe recipe = new Recipe(name, this);
-		recipes.add(recipe);
+		recipes.put(name, recipe);
 		return recipe;
 	}
 	
@@ -111,7 +103,7 @@ public class Food {
 	 * @return collection of recipes though the {@link NutritionalElement} interface
 	 */
 	public Collection<NutritionalElement> recipes(){
-		return recipes;
+		return recipes.values();
 	}
 	
 	/**
@@ -120,10 +112,7 @@ public class Food {
 	 * @return  a recipe though the {@link NutritionalElement} interface
 	 */
 	public NutritionalElement getRecipe(String name){
-		for (NutritionalElement recipe : recipes) {
-			if (recipe.getName().equals(name)) return recipe;
-		}
-		return null;
+		return recipes.get(name);
 	}
 	
 	/**
@@ -135,15 +124,6 @@ public class Food {
 	public Menu createMenu(String name) {
 		Menu menu = new Menu(name, this);
 		return menu;
-	}
-
-	private static class ByNameRawMaterialComparator implements Comparator<NutritionalElement> {
-
-
-		@Override
-		public int compare(NutritionalElement o1, NutritionalElement o2) {
-			return o1.getName().compareTo(o2.getName());
-		}
 	}
 	
 }

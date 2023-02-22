@@ -17,7 +17,7 @@ public class Recipe implements NutritionalElement {
 	private String name;
 	private Food food;
 
-	private Map<String, Double> ingredients = new HashMap<>();
+	private Map<NutritionalElement, Double> ingredients = new HashMap<>();
 
 	public Recipe(String name, Food food) {
 		this.name = name;
@@ -33,7 +33,7 @@ public class Recipe implements NutritionalElement {
 	 * @return the same Recipe object, it allows method chaining.
 	 */
 	public Recipe addIngredient(String material, double quantity) {
-		ingredients.put(material, quantity);
+		ingredients.put(food.getRawMaterial(material), quantity);
 		return this;
 	}
 
@@ -47,8 +47,8 @@ public class Recipe implements NutritionalElement {
 		double totalCalories = 0;
 		double totalQuantity = 0;
 
-		for (Map.Entry<String, Double> entry : ingredients.entrySet()) {
-			totalCalories += food.getRawMaterial(entry.getKey()).getCalories() * entry.getValue() / 100;
+		for (Map.Entry<NutritionalElement, Double> entry : ingredients.entrySet()) {
+			totalCalories += entry.getKey().getCalories() * entry.getValue() / 100;
 			totalQuantity += entry.getValue();
 		}
 
@@ -60,8 +60,8 @@ public class Recipe implements NutritionalElement {
 		double totalProteins = 0;
 		double totalQuantity = 0;
 
-		for (Map.Entry<String, Double> entry : ingredients.entrySet()) {
-			totalProteins += food.getRawMaterial(entry.getKey()).getProteins() * entry.getValue() / 100;
+		for (Map.Entry<NutritionalElement, Double> entry : ingredients.entrySet()) {
+			totalProteins += entry.getKey().getProteins() * entry.getValue() / 100;
 			totalQuantity += entry.getValue();
 		}
 
@@ -73,8 +73,8 @@ public class Recipe implements NutritionalElement {
 		double totalCarbs = 0;
 		double totalQuantity = 0;
 
-		for (Map.Entry<String, Double> entry : ingredients.entrySet()) {
-			totalCarbs += food.getRawMaterial(entry.getKey()).getCarbs() * entry.getValue() / 100;
+		for (Map.Entry<NutritionalElement, Double> entry : ingredients.entrySet()) {
+			totalCarbs += entry.getKey().getCarbs() * entry.getValue() / 100;
 			totalQuantity += entry.getValue();
 		}
 
@@ -86,8 +86,8 @@ public class Recipe implements NutritionalElement {
 		double totalFat = 0;
 		double totalQuantity = 0;
 
-		for (Map.Entry<String, Double> entry : ingredients.entrySet()) {
-			totalFat += food.getRawMaterial(entry.getKey()).getFat() * entry.getValue() / 100;
+		for (Map.Entry<NutritionalElement, Double> entry : ingredients.entrySet()) {
+			totalFat += entry.getKey().getFat() * entry.getValue() / 100;
 			totalQuantity += entry.getValue();
 		}
 
