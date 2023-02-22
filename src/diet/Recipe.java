@@ -57,17 +57,41 @@ public class Recipe implements NutritionalElement {
 
 	@Override
 	public double getProteins() {
-		return 0.0;
+		double totalProteins = 0;
+		double totalQuantity = 0;
+
+		for (Map.Entry<String, Double> entry : ingredients.entrySet()) {
+			totalProteins += food.getRawMaterial(entry.getKey()).getProteins() * entry.getValue() / 100;
+			totalQuantity += entry.getValue();
+		}
+
+		return totalProteins * 100 / totalQuantity;
 	}
 
 	@Override
 	public double getCarbs() {
-		return 0.0;
+		double totalCarbs = 0;
+		double totalQuantity = 0;
+
+		for (Map.Entry<String, Double> entry : ingredients.entrySet()) {
+			totalCarbs += food.getRawMaterial(entry.getKey()).getCarbs() * entry.getValue() / 100;
+			totalQuantity += entry.getValue();
+		}
+
+		return totalCarbs * 100 / totalQuantity;
 	}
 
 	@Override
 	public double getFat() {
-		return 0.0;
+		double totalFat = 0;
+		double totalQuantity = 0;
+
+		for (Map.Entry<String, Double> entry : ingredients.entrySet()) {
+			totalFat += food.getRawMaterial(entry.getKey()).getFat() * entry.getValue() / 100;
+			totalQuantity += entry.getValue();
+		}
+
+		return totalFat * 100 / totalQuantity;
 	}
 
 	/**

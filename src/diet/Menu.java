@@ -1,5 +1,10 @@
 package diet;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 /**
  * Represents a complete menu.
  * 
@@ -7,7 +12,17 @@ package diet;
  *
  */
 public class Menu implements NutritionalElement {
-	
+	private String name;
+	private Food food;
+
+	private Map<NutritionalElement, Double> recipes = new HashMap<>();
+	private Set<NutritionalElement> products = new HashSet<>();
+
+	public Menu(String name, Food food) {
+		this.name = name;
+		this.food = food;
+	}
+
 	/**
 	 * Adds a given serving size of a recipe.
 	 * The recipe is a name of a recipe defined in the {@code food}
@@ -18,7 +33,9 @@ public class Menu implements NutritionalElement {
 	 * @return the same Menu to allow method chaining
 	 */
 	public Menu addRecipe(String recipe, double quantity) {
-		return null;
+		NutritionalElement recipeObject = food.getRecipe(recipe);
+		recipes.put(recipeObject, quantity);
+		return this;
 	}
 
 	/**
@@ -30,12 +47,14 @@ public class Menu implements NutritionalElement {
 	 * @return the same Menu to allow method chaining
 	 */
 	public Menu addProduct(String product) {
-		return null;
+		NutritionalElement productObject = food.getProduct(product);
+		products.add(productObject);
+		return this;
 	}
 
 	@Override
 	public String getName() {
-		return null;
+		return name;
 	}
 
 	/**
@@ -43,7 +62,17 @@ public class Menu implements NutritionalElement {
 	 */
 	@Override
 	public double getCalories() {
-		return 0.0;
+		double totalRecipeCalories = 0;
+		double totalProductCalories = 0;
+
+		for (Map.Entry<NutritionalElement, Double> entry : recipes.entrySet()) {
+			totalRecipeCalories += entry.getKey().getCalories() * entry.getValue() / 100;
+		}
+		for (NutritionalElement product : products) {
+			totalProductCalories += product.getCalories();
+		}
+
+		return totalRecipeCalories + totalProductCalories;
 	}
 
 	/**
@@ -51,7 +80,17 @@ public class Menu implements NutritionalElement {
 	 */
 	@Override
 	public double getProteins() {
-		return 0.0;
+		double totalRecipeCalories = 0;
+		double totalProductCalories = 0;
+
+		for (Map.Entry<NutritionalElement, Double> entry : recipes.entrySet()) {
+			totalRecipeCalories += entry.getKey().getProteins() * entry.getValue() / 100;
+		}
+		for (NutritionalElement product : products) {
+			totalProductCalories += product.getProteins();
+		}
+
+		return totalRecipeCalories + totalProductCalories;
 	}
 
 	/**
@@ -59,7 +98,17 @@ public class Menu implements NutritionalElement {
 	 */
 	@Override
 	public double getCarbs() {
-		return 0.0;
+		double totalRecipeCalories = 0;
+		double totalProductCalories = 0;
+
+		for (Map.Entry<NutritionalElement, Double> entry : recipes.entrySet()) {
+			totalRecipeCalories += entry.getKey().getCarbs() * entry.getValue() / 100;
+		}
+		for (NutritionalElement product : products) {
+			totalProductCalories += product.getCarbs();
+		}
+
+		return totalRecipeCalories + totalProductCalories;
 	}
 
 	/**
@@ -67,7 +116,17 @@ public class Menu implements NutritionalElement {
 	 */
 	@Override
 	public double getFat() {
-		return 0.0;
+		double totalRecipeCalories = 0;
+		double totalProductCalories = 0;
+
+		for (Map.Entry<NutritionalElement, Double> entry : recipes.entrySet()) {
+			totalRecipeCalories += entry.getKey().getFat() * entry.getValue() / 100;
+		}
+		for (NutritionalElement product : products) {
+			totalProductCalories += product.getFat();
+		}
+
+		return totalRecipeCalories + totalProductCalories;
 	}
 
 	/**

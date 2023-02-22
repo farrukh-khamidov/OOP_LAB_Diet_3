@@ -133,7 +133,8 @@ public class Food {
 	 * @return the newly created menu
 	 */
 	public Menu createMenu(String name) {
-		return null;
+		Menu menu = new Menu(name, this);
+		return menu;
 	}
 
 	private static class ByNameRawMaterialComparator implements Comparator<NutritionalElement> {
